@@ -1,7 +1,6 @@
 # To run the FlaskBookapi:
 
-1. Install the required dependencies by running the following command in your terminal or command prompt:
-
+1. Install the required dependencies by running the following command in your terminal or command prompt: 
 ```pip install -r requirements.txt```
 
 2. Navigate to the api directory:
