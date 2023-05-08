@@ -46,7 +46,7 @@ def RunInference(img, net, output_layers, confidence_threshold=0.3, nms_threshol
             scores = detection[5:]
             class_id = np.argmax(scores)
             confidence = scores[class_id]
-            print( str(classes[class_id]))
+            # print( str(classes[class_id]))
             if confidence > confidence_threshold:
                 # Object detected
                 center_x = int(detection[0] * width)
@@ -62,6 +62,11 @@ def RunInference(img, net, output_layers, confidence_threshold=0.3, nms_threshol
                 confidences.append(float(confidence))
                 class_ids.append(class_id)
                 print(f"class_id: {class_id}")
+    
+    if not class_ids:
+        print("No titles detected")
+        print(f"No objects detected above the confidence threshold of {confidence_threshold} and non-maximum suppression threshold of {nms_threshold}.")
+        return img, []        
 
     # Perform non-maximum suppression to remove overlapping bounding boxes
     indexes = cv2.dnn.NMSBoxes(boxes, confidences, confidence_threshold, nms_threshold)
