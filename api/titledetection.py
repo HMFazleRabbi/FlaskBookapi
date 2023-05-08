@@ -67,6 +67,8 @@ def RunInference(img, net, output_layers, confidence_threshold=0.3, nms_threshol
         print("No titles detected")
         print(f"No objects detected above the confidence threshold of {confidence_threshold} and non-maximum suppression threshold of {nms_threshold}.")
         return img, []        
+        # Testing code
+        # return img, ["The Spirit of 'C' An Introduction to Modern Programming", 'C++ for VB Pto', 'A Book On']        
 
     # Perform non-maximum suppression to remove overlapping bounding boxes
     indexes = cv2.dnn.NMSBoxes(boxes, confidences, confidence_threshold, nms_threshold)
