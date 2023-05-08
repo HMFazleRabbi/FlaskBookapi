@@ -1,15 +1,19 @@
 from flask import Flask, request, jsonify
 from PIL import Image
 from io import BytesIO
+from title_detection import load_model, load_image, RunInference
 
 app = Flask(__name__)
 
 def Run_Image_Processing(image, title):
     # TODO: Run title detection
-    # Save the image to a file
-    image.save(title + "-Pil.jpg")
-    print("Running and processing using AI.")
-    return False
+    image_path = "InputImage.jpg.jpg"
+    img = load_image(image_path, 0.4)
+
+    output_image, title_list = RunInference(img, net, output_layers, confidence_threshold=0.3, nms_threshold=0.5, save_image=False)
+
+
+    return title_list
 
 @app.route('/upload', methods=['POST'])
 def upload_image():
@@ -33,7 +37,7 @@ def upload_image():
     # print(title)
 
     # Save image
-    file.save( title + '.jpg')
+    file.save('InputImage.jpg')
 
     # Convert file to PIL Image object
     try:
@@ -52,5 +56,10 @@ def upload_image():
 def hello_world():
     return 'This is my first API call!'
 
+weights_path = "yolov3_custom_last.weights"
+config_path = "yolov3_custom.cfg"
+net, output_layers = load_model(weights_path, config_path)
+
 if __name__ == '__main__':
+    
     app.run()
